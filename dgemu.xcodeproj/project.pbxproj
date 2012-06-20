@@ -1,0 +1,231 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2736B51F1591B47E001B4192 /* dgemu.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2736B51E1591B47E001B4192 /* dgemu.1 */; };
+		2736B52E1591B7E5001B4192 /* dgemu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2736B52D1591B7E5001B4192 /* dgemu.cpp */; };
+		2736B5301591BD95001B4192 /* libcurses.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2736B52F1591BD94001B4192 /* libcurses.dylib */; };
+		27927C0B159238F700891256 /* z80.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27927C09159238F700891256 /* z80.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2736B5161591B47D001B4192 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				2736B51F1591B47E001B4192 /* dgemu.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2736B5181591B47D001B4192 /* dgemu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dgemu; sourceTree = BUILT_PRODUCTS_DIR; };
+		2736B51E1591B47E001B4192 /* dgemu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = dgemu.1; sourceTree = "<group>"; };
+		2736B52D1591B7E5001B4192 /* dgemu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dgemu.cpp; sourceTree = "<group>"; };
+		2736B52F1591BD94001B4192 /* libcurses.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurses.dylib; path = usr/lib/libcurses.dylib; sourceTree = SDKROOT; };
+		27927C09159238F700891256 /* z80.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = z80.cpp; path = libz80/z80.cpp; sourceTree = "<group>"; };
+		27927C0A159238F700891256 /* z80.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = z80.h; path = libz80/z80.h; sourceTree = "<group>"; };
+		27927C0C1592391300891256 /* opcodes_decl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = opcodes_decl.hpp; path = libz80/codegen/opcodes_decl.hpp; sourceTree = "<group>"; };
+		27927C0D1592391300891256 /* opcodes_table.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = opcodes_table.hpp; path = libz80/codegen/opcodes_table.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2736B5151591B47D001B4192 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2736B5301591BD95001B4192 /* libcurses.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2736B50D1591B47D001B4192 = {
+			isa = PBXGroup;
+			children = (
+				27927C08159238DE00891256 /* libz80 */,
+				2736B52F1591BD94001B4192 /* libcurses.dylib */,
+				2736B51B1591B47D001B4192 /* dgemu */,
+				2736B5191591B47D001B4192 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2736B5191591B47D001B4192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2736B5181591B47D001B4192 /* dgemu */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2736B51B1591B47D001B4192 /* dgemu */ = {
+			isa = PBXGroup;
+			children = (
+				2736B52D1591B7E5001B4192 /* dgemu.cpp */,
+				2736B51E1591B47E001B4192 /* dgemu.1 */,
+			);
+			path = dgemu;
+			sourceTree = "<group>";
+		};
+		27927C08159238DE00891256 /* libz80 */ = {
+			isa = PBXGroup;
+			children = (
+				27927C0C1592391300891256 /* opcodes_decl.hpp */,
+				27927C0D1592391300891256 /* opcodes_table.hpp */,
+				27927C09159238F700891256 /* z80.cpp */,
+				27927C0A159238F700891256 /* z80.h */,
+			);
+			name = libz80;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2736B5171591B47D001B4192 /* dgemu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2736B5221591B47E001B4192 /* Build configuration list for PBXNativeTarget "dgemu" */;
+			buildPhases = (
+				2736B5141591B47D001B4192 /* Sources */,
+				2736B5151591B47D001B4192 /* Frameworks */,
+				2736B5161591B47D001B4192 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dgemu;
+			productName = dgemu;
+			productReference = 2736B5181591B47D001B4192 /* dgemu */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2736B50F1591B47D001B4192 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 2736B5121591B47D001B4192 /* Build configuration list for PBXProject "dgemu" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2736B50D1591B47D001B4192;
+			productRefGroup = 2736B5191591B47D001B4192 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2736B5171591B47D001B4192 /* dgemu */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2736B5141591B47D001B4192 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2736B52E1591B7E5001B4192 /* dgemu.cpp in Sources */,
+				27927C0B159238F700891256 /* z80.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2736B5201591B47E001B4192 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2736B5211591B47E001B4192 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2736B5231591B47E001B4192 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2736B5241591B47E001B4192 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2736B5121591B47D001B4192 /* Build configuration list for PBXProject "dgemu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2736B5201591B47E001B4192 /* Debug */,
+				2736B5211591B47E001B4192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2736B5221591B47E001B4192 /* Build configuration list for PBXNativeTarget "dgemu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2736B5231591B47E001B4192 /* Debug */,
+				2736B5241591B47E001B4192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2736B50F1591B47D001B4192 /* Project object */;
+}
