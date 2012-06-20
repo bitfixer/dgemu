@@ -176,17 +176,14 @@ int read_console(int *buffer, int numchars)
     
 void clearscr()
 {
-    /*
     c = 0;
     r = 0;
-    //clear();
+    clear();
     move(r,c);
-     */
 }
 
 void cursorback()
 {
-    /*
     c--;
     if (c < 0)
     {
@@ -197,12 +194,11 @@ void cursorback()
             r = nrows - 1;
         }
     }
-    */
+    move(r,c);
 }
 
 void cursorforward()
 {
-    /*
     c++; // go to next column
     if (c == ncols)
     {
@@ -211,30 +207,20 @@ void cursorforward()
         if (r == nrows) r = 0;
     }
     move(r,c);
-    */
 }
 
 void draw(char dc)
 {  
-    /*
     move(r,c);  // curses call to move cursor to row r, column c
     addch(dc);
     refresh();  // curses call to update screen
-    */
-    unsigned char s[2];
-    s[0] = dc;
-    s[1] = 0;
-    
-    printf("%c\n",dc);
 }
 
 void write_command_string(char *str)
 {
     // move to command section
-    //fprintf(fp, "requesting tape file %s\n",str);
     mvaddstr(18, 0, str);
     refresh();
-    //move(r,c);
 }
 
 char *get_input_string()
@@ -391,9 +377,6 @@ int main (int argc, const char * argv[]) {
     int test;
     int char_read_counter;
     
-    printf("adfasd\n");
-    
-    
     last_key_pressed = 0;
     count = 10;
     last_msb = false;
@@ -419,15 +402,13 @@ int main (int argc, const char * argv[]) {
     
     program_index = 0;
     
-    //open_console();
+    open_console();
     
     fp = fopen("z80debug.txt","w");
     
     nrows = 16;
     ncols = 64;
     
-    
-    /*
     wnd = initscr();
     nodelay(wnd, true);
     keypad(stdscr, true);
@@ -435,40 +416,32 @@ int main (int argc, const char * argv[]) {
     noecho();
     clear();
     refresh();
-    */
      
     //Z80 proc;
     printf("initialize emulator\n");
     init_emulator();
     
-    //ResetZ80(&proc);
-    //reset();
+    // reset the Z80 processor
     Z80RESET(&context);
-    
-    printf("starting");
     
     gettimeofday(&cpu_start, NULL);
 	cycles = 0;
     while (1)
     {
         gettimeofday(&cpu_end, NULL);
-        //fprintf(fp, "cycle end %ld %ld\n",cpu_end.tv_sec, cpu_end.tv_usec);
         
         diff_usec = cpu_end.tv_usec - cpu_start.tv_usec;
         cycle_time = (1.0 / cpu_speed) * (1 - cycles);
         wait_usec = (int) (cycle_time * 1000000) - diff_usec;
-        //fprintf(fp, "diff usec: %d %f %d\n",diff_usec, cycle_time, wait_usec);
         if (wait_usec > 0 && wait_usec < 10)
         {
             // wait for appropriate delay
-            //usleep(wait_usec);
+            usleep(wait_usec);
         }
         
         gettimeofday(&cpu_start, NULL);
-        //fprintf(fp, "cycle start %ld %ld\n",cpu_start.tv_sec, cpu_start.tv_usec);
-        //cycles = ExecZ80(&proc, 1);
         Z80Execute(&context);
-        
+        cycles++;
         
         if (char_read_counter < 10)
         {
@@ -645,12 +618,6 @@ static void context_mem_write_callback(int param, ushort address, byte data)
     RAM[address] = data;
 }
 
-/*
-void PatchZ80(register Z80 *r)
-{
-}
-*/
-
 //static void OutZ80(register word Port, register byte Value)
 static void OutZ80(int param, ushort Port, byte Value)
 {
@@ -663,7 +630,7 @@ static void OutZ80(int param, ushort Port, byte Value)
         {
             if (Value == 127 || Value == 255)
             {
-                //clearscr();
+                clearscr();
             }
             else if (Value > 127) // MSB high
             {
@@ -674,11 +641,7 @@ static void OutZ80(int param, ushort Port, byte Value)
                     v = ' ';
                 }
                 
-                if (v != ' ')
-                {
-                    draw(v);
-                }
-                
+                draw(v);
                 cursorforward();
                 
                 last_msb = true;
@@ -719,11 +682,4 @@ static void OutZ80(int param, ushort Port, byte Value)
         gettimeofday(&last_tape_write, NULL);
     }
 }
-
-/*
-word LoopZ80(register Z80 *R)
-{
-	return 0;
-}
-*/
 
