@@ -93,6 +93,10 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 #include <termios.h> /* POSIX terminal control definitions */
 #endif
 
+#define Z80EX_API_REVISION 1
+#define Z80EX_VERSION_MAJOR 1
+#define Z80EX_VERSION_MINOR 19
+
 #include <stdio.h>   /* Standard input/output definitions */
 #include <stdlib.h>
 #include <string.h>  /* String function definitions */

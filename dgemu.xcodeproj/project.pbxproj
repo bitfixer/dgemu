@@ -189,6 +189,11 @@
 		2736B5231591B47E001B4192 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-DZ80EX_API_REVISION=1",
+					"-DZ80EX_VERSION_MINOR=19",
+					"-DZ80EX_VERSION_MAJOR=1",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -196,6 +201,11 @@
 		2736B5241591B47E001B4192 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-DZ80EX_API_REVISION=1",
+					"-DZ80EX_VERSION_MINOR=19",
+					"-DZ80EX_VERSION_MAJOR=1",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
