@@ -10,7 +10,7 @@
 		2736B51F1591B47E001B4192 /* dgemu.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2736B51E1591B47E001B4192 /* dgemu.1 */; };
 		2736B52E1591B7E5001B4192 /* dgemu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2736B52D1591B7E5001B4192 /* dgemu.cpp */; };
 		2736B5301591BD95001B4192 /* libcurses.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2736B52F1591BD94001B4192 /* libcurses.dylib */; };
-		27927C0B159238F700891256 /* z80.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27927C09159238F700891256 /* z80.cpp */; };
+		65F9BBF31592AD9E0004F4B4 /* z80ex.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F9BBF21592AD9E0004F4B4 /* z80ex.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,10 +31,8 @@
 		2736B51E1591B47E001B4192 /* dgemu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = dgemu.1; sourceTree = "<group>"; };
 		2736B52D1591B7E5001B4192 /* dgemu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dgemu.cpp; sourceTree = "<group>"; };
 		2736B52F1591BD94001B4192 /* libcurses.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurses.dylib; path = usr/lib/libcurses.dylib; sourceTree = SDKROOT; };
-		27927C09159238F700891256 /* z80.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = z80.cpp; path = libz80/z80.cpp; sourceTree = "<group>"; };
-		27927C0A159238F700891256 /* z80.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = z80.h; path = libz80/z80.h; sourceTree = "<group>"; };
-		27927C0C1592391300891256 /* opcodes_decl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = opcodes_decl.hpp; path = libz80/codegen/opcodes_decl.hpp; sourceTree = "<group>"; };
-		27927C0D1592391300891256 /* opcodes_table.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = opcodes_table.hpp; path = libz80/codegen/opcodes_table.hpp; sourceTree = "<group>"; };
+		65F9BBF21592AD9E0004F4B4 /* z80ex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = z80ex.c; path = z80ex/z80ex.c; sourceTree = "<group>"; };
+		65F9BBF41592ADAA0004F4B4 /* z80ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = z80ex.h; path = z80ex/include/z80ex.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +50,7 @@
 		2736B50D1591B47D001B4192 = {
 			isa = PBXGroup;
 			children = (
-				27927C08159238DE00891256 /* libz80 */,
+				658751BA15929D6F00992378 /* z80ex */,
 				2736B52F1591BD94001B4192 /* libcurses.dylib */,
 				2736B51B1591B47D001B4192 /* dgemu */,
 				2736B5191591B47D001B4192 /* Products */,
@@ -76,15 +74,13 @@
 			path = dgemu;
 			sourceTree = "<group>";
 		};
-		27927C08159238DE00891256 /* libz80 */ = {
+		658751BA15929D6F00992378 /* z80ex */ = {
 			isa = PBXGroup;
 			children = (
-				27927C0C1592391300891256 /* opcodes_decl.hpp */,
-				27927C0D1592391300891256 /* opcodes_table.hpp */,
-				27927C09159238F700891256 /* z80.cpp */,
-				27927C0A159238F700891256 /* z80.h */,
+				65F9BBF41592ADAA0004F4B4 /* z80ex.h */,
+				65F9BBF21592AD9E0004F4B4 /* z80ex.c */,
 			);
-			name = libz80;
+			name = z80ex;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2736B52E1591B7E5001B4192 /* dgemu.cpp in Sources */,
-				27927C0B159238F700891256 /* z80.cpp in Sources */,
+				65F9BBF31592AD9E0004F4B4 /* z80ex.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -97,15 +97,23 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 #include <stdlib.h>
 #include <string.h>  /* String function definitions */
 #include <errno.h>   /* Error number definitions */
-#include "z80.h"
+#include "z80ex.h"
 #include "z80program.h"
 
-static Z80Context context;
+//static Z80Context context;
+
+Z80EX_BYTE context_mem_read_callback(Z80EX_CONTEXT *cpu, Z80EX_WORD addr, int m1_state, void *user_data);
+void context_mem_write_callback(Z80EX_CONTEXT *cpu, Z80EX_WORD addr, Z80EX_BYTE value, void *user_data);
+Z80EX_BYTE InZ80(Z80EX_CONTEXT *cpu, Z80EX_WORD Port, void *user_data);
+void OutZ80(Z80EX_CONTEXT *cpu, Z80EX_WORD Port, Z80EX_BYTE Value, void *user_data);
+
+Z80EX_CONTEXT *context;
+
 
 #define DELETE 127
 #define BACKSPACE 8
 
-byte *RAM;
+Z80EX_BYTE *RAM;
 int program_index;
 
 int r,c,  // current row and column (upper-left is (0,0))
@@ -136,17 +144,20 @@ timeval last_tape_write;
 timeval last_tape_read;
 WINDOW *wnd;
 
-static byte context_mem_read_callback(int param, ushort address);
-static void context_mem_write_callback(int param, ushort address, byte data);
-static byte InZ80(int param, ushort Port);
-static void OutZ80(int param, ushort Port, byte Value);
-
 void init_emulator()
 {
+/*
     context.memRead = context_mem_read_callback;
     context.memWrite = context_mem_write_callback;
     context.ioRead = InZ80;
     context.ioWrite = OutZ80;
+*/
+    
+    context = z80ex_create(context_mem_read_callback, NULL, 
+                           context_mem_write_callback, NULL, 
+                           InZ80, NULL, 
+                           OutZ80, NULL, 
+                           NULL, NULL);
 }
 
 void open_console()
@@ -388,7 +399,7 @@ int main (int argc, const char * argv[]) {
     buffersize = 0;
     char_read_counter = 0;
     
-    RAM = (byte *)malloc(64000);
+    RAM = (Z80EX_BYTE *)malloc(64000);
     
     for (i = 0; i < 64000; i++)
     {
@@ -422,7 +433,8 @@ int main (int argc, const char * argv[]) {
     init_emulator();
     
     // reset the Z80 processor
-    Z80RESET(&context);
+    //Z80RESET(&context);
+    z80ex_reset(context);
     
     gettimeofday(&cpu_start, NULL);
 	cycles = 0;
@@ -440,7 +452,8 @@ int main (int argc, const char * argv[]) {
         }
         
         gettimeofday(&cpu_start, NULL);
-        Z80Execute(&context);
+        //Z80Execute(&context);
+        z80ex_step(context);
         cycles++;
         
         if (char_read_counter < 10)
@@ -538,7 +551,8 @@ int main (int argc, const char * argv[]) {
 }
 
 //static byte InZ80(register word Port)
-static byte InZ80(int param, ushort Port)
+//static byte InZ80(int param, ushort Port)
+Z80EX_BYTE InZ80(Z80EX_CONTEXT *cpu, Z80EX_WORD Port, void *user_data)
 {
     unsigned char c, ret, inkey, i;
     c = Port & 0x00ff;
@@ -606,20 +620,23 @@ static byte InZ80(int param, ushort Port)
 
 }
 
-static byte context_mem_read_callback(int param, ushort address)
+//static byte context_mem_read_callback(int param, ushort address)
+Z80EX_BYTE context_mem_read_callback(Z80EX_CONTEXT *cpu, Z80EX_WORD addr, int m1_state, void *user_data)
 {
     //return memory[address];
-    return RAM[address];
+    return RAM[addr];
 }
 
-static void context_mem_write_callback(int param, ushort address, byte data)
+//static void context_mem_write_callback(int param, ushort address, byte data)
+void context_mem_write_callback(Z80EX_CONTEXT *cpu, Z80EX_WORD addr, Z80EX_BYTE value, void *user_data)
 {
     //memory[address] = data;
-    RAM[address] = data;
+    RAM[addr] = value;
 }
 
 //static void OutZ80(register word Port, register byte Value)
-static void OutZ80(int param, ushort Port, byte Value)
+//static void OutZ80(int param, ushort Port, byte Value)
+void OutZ80(Z80EX_CONTEXT *cpu, Z80EX_WORD Port, Z80EX_BYTE Value, void *user_data)
 {
     unsigned char c,v,lsb;
     c = Port & 0x00FF;
