@@ -1,0 +1,3 @@
+[submodule "z80ex"]
+	path = z80ex
+	url = https://github.com/mkoloberdin/z80ex.git
