@@ -1,4 +1,27 @@
 <?php
+/*
+ suding.php
+ Convert software for digital group computers in audio format into raw binary,
+ suitable for loading into the dgemu digital group emulator.
+ Copyright (C) 2012 Michael Hill
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ Contact the author at bitfixer@bitfixer.com
+ http://bitfixer.com
+ */
+    
 
 function get_bytes($bitfile, $bytefile)
 {
@@ -469,10 +492,18 @@ function get_bytes_new($zerofile, $headerfile, $binfile, $programdata = false)
     fclose($headerhandle);
     fclose($binhandle);
 }
-
+    
+function print_usage()
+{
+    print "usage: php suding.php <input_prefix> <isdata>\n";
+    print "input_prefix is the prefix for a wav file, i.e. program => program.wav\n";
+    print "isdata indicates if this is an executable or data file. If isdata is present, this file is executable.\n";
+}
+    
 // get input filename
 $fname = $argv[1];
 
+// check for argument which indicates if this is executable or data file
 if (sizeof($argv) > 2)
 {
     $program = true;
@@ -484,9 +515,24 @@ else
 
 // first convert the wav file
 $wavfile = $fname.".wav";
+    
+if (!file_exists($wavfile))
+{
+    print "sorry, couldn't find $wavfile. Can't continue.\n";
+    print_usage();
+    die;
+}
+    
 $datfile = $fname.".dat";
 $cmd = "sox $wavfile -c 1 $datfile";
 system($cmd);
+    
+// check for existence of dat file
+if (!file_exists($datfile))
+{
+    print "sox must be installed on this system. Please install sox from http://http://sox.sourceforge.net/\n";
+    die;
+}
     
 // now process the audio file    
 find_zero_crossings($fname);
