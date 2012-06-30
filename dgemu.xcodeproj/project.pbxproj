@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2736B51F1591B47E001B4192 /* dgemu.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2736B51E1591B47E001B4192 /* dgemu.1 */; };
 		2736B52E1591B7E5001B4192 /* dgemu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2736B52D1591B7E5001B4192 /* dgemu.cpp */; };
 		2736B5301591BD95001B4192 /* libcurses.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2736B52F1591BD94001B4192 /* libcurses.dylib */; };
 		65F9BBF31592AD9E0004F4B4 /* z80ex.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F9BBF21592AD9E0004F4B4 /* z80ex.c */; };
@@ -20,7 +19,6 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				2736B51F1591B47E001B4192 /* dgemu.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -28,7 +26,6 @@
 
 /* Begin PBXFileReference section */
 		2736B5181591B47D001B4192 /* dgemu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dgemu; sourceTree = BUILT_PRODUCTS_DIR; };
-		2736B51E1591B47E001B4192 /* dgemu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = dgemu.1; sourceTree = "<group>"; };
 		2736B52D1591B7E5001B4192 /* dgemu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dgemu.cpp; sourceTree = "<group>"; };
 		2736B52F1591BD94001B4192 /* libcurses.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurses.dylib; path = usr/lib/libcurses.dylib; sourceTree = SDKROOT; };
 		65F9BBF21592AD9E0004F4B4 /* z80ex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = z80ex.c; path = z80ex/z80ex.c; sourceTree = "<group>"; };
@@ -69,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				2736B52D1591B7E5001B4192 /* dgemu.cpp */,
-				2736B51E1591B47E001B4192 /* dgemu.1 */,
 			);
 			path = dgemu;
 			sourceTree = "<group>";
