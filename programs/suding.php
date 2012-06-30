@@ -313,7 +313,6 @@ function get_bytes_new($zerofile, $headerfile, $binfile, $programdata = false)
     }
     print "$time, $duration, $freq\n";
     
-    
     $stop_addr_hi_oct = 0;
     $stop_addr_lo_oct = 0;
     $addr_hi_oct = 1;
@@ -463,8 +462,7 @@ function get_bytes_new($zerofile, $headerfile, $binfile, $programdata = false)
             $byte++;
         }
         
-    }
-    
+    }    
     
     print "$stop_addr_hi_oct $stop_addr_lo_oct\n";
     fwrite($headerhandle, "};\n");
@@ -472,7 +470,7 @@ function get_bytes_new($zerofile, $headerfile, $binfile, $programdata = false)
     fclose($binhandle);
 }
 
-	
+// get input filename
 $fname = $argv[1];
 
 if (sizeof($argv) > 2)
@@ -484,17 +482,23 @@ else
     $program = false;
 }
 
+// first convert the wav file
+$wavfile = $fname.".wav";
 $datfile = $fname.".dat";
+$cmd = "sox $wavfile -c 1 $datfile";
+system($cmd);
+    
+// now process the audio file    
 find_zero_crossings($fname);
 $zerofile = $fname.".zero.txt";
 $headerfile = $fname.".h";
 $binfile = $fname.".bin";
 
 get_bytes_new($zerofile, $headerfile, $binfile, $program);
-
-
-//$bitfile = $fname.".bits.txt";
-//$bytefile = $fname.".bin";
-//get_bytes($bitfile, $bytefile);
-	
+    
+// remove the temp files
+unlink($datfile);
+unlink($zerofile);
+unlink($fname.".bits.txt");
+unlink($fname.".timing.txt");
 ?>
