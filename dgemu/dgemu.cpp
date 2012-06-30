@@ -93,14 +93,11 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 #include <termios.h> /* POSIX terminal control definitions */
 #endif
 
-#define Z80EX_API_REVISION 1
-#define Z80EX_VERSION_MAJOR 1
-#define Z80EX_VERSION_MINOR 19
-
 #include <stdio.h>   /* Standard input/output definitions */
 #include <stdlib.h>
 #include <string.h>  /* String function definitions */
 #include <errno.h>   /* Error number definitions */
+#include <math.h>
 #include "z80ex.h"
 #include "z80program.h"
 
@@ -150,13 +147,6 @@ WINDOW *wnd;
 
 void init_emulator()
 {
-/*
-    context.memRead = context_mem_read_callback;
-    context.memWrite = context_mem_write_callback;
-    context.ioRead = InZ80;
-    context.ioWrite = OutZ80;
-*/
-    
     context = z80ex_create(context_mem_read_callback, NULL, 
                            context_mem_write_callback, NULL, 
                            InZ80, NULL, 
@@ -267,9 +257,9 @@ char *get_input_string()
                 {
                     inputstring[pos] = 0;
                     getyx(wnd, x, y);
-                    fprintf(fp, "move to %d %d\n",x,y);
-                    fprintf(fp, "input string is now %s\n", inputstring);
-                    fflush(fp);
+                    //fprintf(fp, "move to %d %d\n",x,y);
+                    //fprintf(fp, "input string is now %s\n", inputstring);
+                    //fflush(fp);
                     move(x, y-1);
                     delch();
                     refresh();
@@ -283,7 +273,7 @@ char *get_input_string()
         //numread = read(infd, &inkey, 1);
         numread = read_console(&inkey, 1);
     }
-    fflush(fp);
+    //fflush(fp);
     return inputstring;
 }
 
@@ -296,7 +286,7 @@ void get_tape_file(bool write)
     write_command_string("Tape File:");
     str = get_input_string();
     strcpy(tape_filename, str);
-    fflush(fp);
+    //fflush(fp);
     
     if (write == false)
     {
@@ -305,7 +295,7 @@ void get_tape_file(bool write)
         size = ftell(tapefile);
     
         fseek(tapefile, 0L, SEEK_SET);
-        fprintf(fp, "size of file: %d\n",size);
+        //fprintf(fp, "size of file: %d\n",size);
         num_tape_bytes_remaining = size;
     }
     else 
@@ -329,7 +319,7 @@ void convert_bit_file()
     size = ftell(tapefile);
     fseek(tapefile, 0L, SEEK_SET);
     
-    fprintf(fp, "read %d bits.\n",size);
+    //fprintf(fp, "read %d bits.\n",size);
     progbytes = 0;
     
     fgets((char *)line, 10, tapefile);
@@ -355,7 +345,7 @@ void convert_bit_file()
             }
         }
             
-        fprintf(fp, "got character: %d (%02x)\n",byte,byte);
+        //fprintf(fp, "got character: %d (%02x)\n",byte,byte);
         progbuffer[progbytes] = byte;
         progbytes++;
         
@@ -385,12 +375,15 @@ int main (int argc, const char * argv[]) {
     int cycles;
     timeval cpu_start;
     timeval cpu_end;
-    double diff_time;
+    //double diff_time;
     int diff_usec;
     double cycle_time;
+    double op_time;
     int wait_usec;
     int test;
     int char_read_counter;
+    int thisOpCycles;
+    FILE *fp;
     
     last_key_pressed = 0;
     count = 10;
@@ -437,28 +430,51 @@ int main (int argc, const char * argv[]) {
     init_emulator();
     
     // reset the Z80 processor
-    //Z80RESET(&context);
     z80ex_reset(context);
     
     gettimeofday(&cpu_start, NULL);
 	cycles = 0;
+    cycle_time = 1000000.0 / cpu_speed;
     while (1)
     {
         gettimeofday(&cpu_end, NULL);
-        
         diff_usec = cpu_end.tv_usec - cpu_start.tv_usec;
-        cycle_time = (1.0 / cpu_speed) * (1 - cycles);
-        wait_usec = (int) (cycle_time * 1000000) - diff_usec;
+        op_time = cycle_time * thisOpCycles;
+        wait_usec = (int)round(op_time) - diff_usec;
+
+        //fprintf(fp, "diff %d, cyc %d, op %lf, wait %d\n",diff_usec,thisOpCycles,op_time,wait_usec);
+        
+        if (wait_usec > 0)
+        {
+            if (wait_usec > 10)
+            {
+                wait_usec = 10;
+            }
+            usleep(wait_usec);
+        }
+        //fprintf(fp, "%d %lf %d\n",thisOpCycles,cycle_time,diff_usec);
+        //fflush(fp);
+        
+        /*
+        if (round(cycle_time) > diff_usec)
+        {
+            usleep(round(cycle_time)-diff_usec);
+        }
+        */ 
+        
+        //printf("diff: %d\n",diff_usec);
+        //cycle_time = (1.0 / cpu_speed) * (1 - cycles);
+        //wait_usec = (int) (cycle_time * 1000000) - diff_usec;
+        //printf("%d usec",wait_usec);
+        /*
         if (wait_usec > 0 && wait_usec < 10)
         {
             // wait for appropriate delay
             usleep(wait_usec);
         }
-        
+        */
         gettimeofday(&cpu_start, NULL);
-        //Z80Execute(&context);
-        z80ex_step(context);
-        cycles++;
+        thisOpCycles = z80ex_step(context);
         
         if (char_read_counter < 10)
         {
@@ -558,7 +574,7 @@ int main (int argc, const char * argv[]) {
 //static byte InZ80(int param, ushort Port)
 Z80EX_BYTE InZ80(Z80EX_CONTEXT *cpu, Z80EX_WORD Port, void *user_data)
 {
-    unsigned char c, ret, inkey, i;
+    unsigned char c, ret, i;
     c = Port & 0x00ff;
     
     if (c == 1)
@@ -619,7 +635,8 @@ Z80EX_BYTE InZ80(Z80EX_CONTEXT *cpu, Z80EX_WORD Port, void *user_data)
     }
     else 
     {
-        //fprintf(fp, "read from port %d\n",c);
+        // different port, not yet implemented
+        return 0;
     }
 
 }
@@ -698,7 +715,7 @@ void OutZ80(Z80EX_CONTEXT *cpu, Z80EX_WORD Port, Z80EX_BYTE Value, void *user_da
             tape_writing = true;
         }
         lsb = Value & 0x01;
-        fprintf(tapefile, "%d\n",lsb);
+        //fprintf(tapefile, "%d\n",lsb);
         
         gettimeofday(&last_tape_write, NULL);
     }
