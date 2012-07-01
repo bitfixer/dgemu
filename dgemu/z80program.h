@@ -1,3 +1,11 @@
+// z80program.h
+// This is a modified version of the digital group ZE Audio ROM, which was used for 
+// loading software from cassette.
+// I modified the 'read byte' subroutine to read bytes from a binary file instead of
+// from the comparator on the dg's cassette port.
+// Michael Hill
+// bitfixer@bitfixer.com
+
 unsigned char program[] = 
 {
 0xc3, // 0 (0)
