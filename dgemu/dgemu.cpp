@@ -464,8 +464,6 @@ int main (int argc, const char * argv[]) {
         op_time = cycle_time * thisOpCycles;
         wait_usec = (int)round(op_time) - diff_usec;
 
-        //fprintf(fp, "diff %d, cyc %d, op %lf, wait %d\n",diff_usec,thisOpCycles,op_time,wait_usec);
-        
         if (wait_usec > 0)
         {
             if (wait_usec > 10)
@@ -474,27 +472,7 @@ int main (int argc, const char * argv[]) {
             }
             usleep(wait_usec);
         }
-        //fprintf(fp, "%d %lf %d\n",thisOpCycles,cycle_time,diff_usec);
-        //fflush(fp);
         
-        /*
-        if (round(cycle_time) > diff_usec)
-        {
-            usleep(round(cycle_time)-diff_usec);
-        }
-        */ 
-        
-        //printf("diff: %d\n",diff_usec);
-        //cycle_time = (1.0 / cpu_speed) * (1 - cycles);
-        //wait_usec = (int) (cycle_time * 1000000) - diff_usec;
-        //printf("%d usec",wait_usec);
-        /*
-        if (wait_usec > 0 && wait_usec < 10)
-        {
-            // wait for appropriate delay
-            usleep(wait_usec);
-        }
-        */
         gettimeofday(&cpu_start, NULL);
         thisOpCycles = z80ex_step(context);
         
